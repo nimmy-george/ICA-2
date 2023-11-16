@@ -19,7 +19,7 @@ jobs:
         USERNAME: ${{ github.actor }}
         VERSION: ${{ github.sha }}
       run: |
-        echo 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 | docker login docker.pkg.github.com -u insightiq --password-stdin
+        echo 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 | docker login docker.pkg.github.com -u insightiq --password-stdin
         docker build -t docker.pkg.github.com/insightiq/repository/insightiq:${{ env.VERSION }} .
         docker push docker.pkg.github.com/insightiq/repository/insightiq:${{ env.VERSION }}
 
