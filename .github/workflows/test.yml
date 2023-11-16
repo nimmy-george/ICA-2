@@ -21,7 +21,7 @@ jobs:
 
     - name: Run unit tests
       run: |
-        python -m unittest discover -s ./ -p '*_test.py'  # Assuming tests are in the root directory
+        python -m unittest discover -s ./ -p '*test_app.py'  # Assuming tests are in the root directory
 
     - name: Archive test reports
       uses: actions/upload-artifact@v2
