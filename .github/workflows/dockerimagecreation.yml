@@ -1,6 +1,6 @@
-name: CI/CD
+name: Build and Push Docker Image
 
-on: [push, pull_request]
+on:  [push, pull_request]
 
 jobs:
   build:
@@ -16,14 +16,11 @@ jobs:
         node-version: '14'
 
     - name: Log in to GitHub Packages
-      run: echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login docker.pkg.github.com -u insightiq --password-stdin
+      run: echo ${{ secrets.GITHUB_TOKEN }} | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
 
     - name: Build and push Docker image
       env:
         VERSION: ${{ github.sha }}
-        IMAGE_NAME: "insightiq" # Replace with your actual image name
       run: |
-        docker build -t docker.pkg.github.com/${{ secrets.DOCKER_USERNAME }}/REPOSITORY/${{ env.IMAGE_NAME }}:${{ env.VERSION }} .
-        docker push docker.pkg.github.com/${{ secrets.DOCKER_USERNAME }}/REPOSITORY/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
-
-  
+        docker build -t docker.pkg.github.com/${{ github.repository }}/insightiq:${{ env.VERSION }} .
+        docker push docker.pkg.github.com/${{ github.repository }}/insightiq:${{ env.VERSION }}
