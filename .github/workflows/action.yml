@@ -1,6 +1,0 @@
-name: 'Setup Testing Environment'
-description: 'Set up a testing environment for a Node.js application'
-runs:
-  using: 'docker'
-  image: 'Dockerfile'
-
