@@ -19,12 +19,12 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt  # Replace with your requirements file if needed
 
-    - name: Run unit tests
+    - name: Run unit tests and generate text report
       run: |
-        python -m unittest discover -s ./ -p 'test_app.py'  # Assuming tests are in the root directory
+        python -m unittest discover -s ./ -p 'test_app.py' > test-report.txt
 
-    - name: Archive test reports
+    - name: Archive test report
       uses: actions/upload-artifact@v2
       with:
-        name: test-reports
-        path: .  # Store all files in the root directory as artifacts
+        name: test-report
+        path: test-report.txt  # Store the text report as an artifact
