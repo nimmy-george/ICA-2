@@ -1,6 +1,3 @@
-name: Docker Build and Push
-
-on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -14,13 +11,14 @@ jobs:
       with:
         node-version: '14'
 
-    - name: Build and push Docker image
+    - name: Log in to GitHub Packages
       env:
         USERNAME: ${{ github.actor }}
+      run: echo $DOCKER_PASSWORD | docker login docker.pkg.github.com -u $DOCKER_USERNAME --password-stdin
+
+    - name: Build and push Docker image
+      env:
         VERSION: ${{ github.sha }}
       run: |
-        echo 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 | docker login docker.pkg.github.com -u insightiq --password-stdin
-        docker build -t docker.pkg.github.com/insightiq/repository/insightiq:${{ env.VERSION }} .
-        docker push docker.pkg.github.com/insightiq/repository/insightiq:${{ env.VERSION }}
-
- 
+        docker build -t docker.pkg.github.com/${{ env.USERNAME }}/repository/IMAGE_NAME:${{ env.VERSION }} .
+        docker push docker.pkg.github.com/${{ env.USERNAME }}/repository/IMAGE_NAME:${{ env.VERSION }}
