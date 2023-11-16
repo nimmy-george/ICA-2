@@ -16,7 +16,7 @@ jobs:
     - name: Log in to GitHub Packages
       env:
         USERNAME: ${{ github.actor }}
-      run: echo $DOCKER_PASSWORD | docker login docker.pkg.github.com -u $DOCKER_USERNAME --password-stdin
+      run: echo $DOCKER_PASSWORD | docker login docker.pkg.github.com -u insightiq --password-stdin
 
     - name: Build and push Docker image
       env:
