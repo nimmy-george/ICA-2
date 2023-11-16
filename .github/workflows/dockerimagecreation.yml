@@ -16,7 +16,7 @@ jobs:
         node-version: '14'
 
     - name: Log in to GitHub Packages
-      run: docker login docker.pkg.github.com -u insightiq --password-stdin < <(echo ${{ secrets.DOCKERHUB_TOKEN }})
+      run: docker login docker.pkg.github.com -u insightiq --password-stdin < <(echo ${{ secrets.GITHUB_TOKEN }})
 
     - name: Build and push Docker image
       env:
