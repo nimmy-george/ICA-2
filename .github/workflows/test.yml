@@ -1,39 +1,30 @@
-name: Python Unit Test
+name: Python Unit Tests
+
 on: [push, pull_request]
+
 jobs:
   test:
     runs-on: ubuntu-latest
+
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+    - uses: actions/checkout@v2
+
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
-        python-version: 3.x  # Choose the Python version you need
-    - name: Cache dependencies
-      uses: actions/cache@v2
-      with:
-        path: ~/.cache/pip
-        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
-        restore-keys: |
-          ${{ runner.os }}-pip-
+        python-version: '3.x' # Choose your desired Python version
+
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r requirements.txt  # Replace with your actual requirements file
+        pip install -r requirements.txt  # Replace with your requirements file if needed
+
     - name: Run unit tests
       run: |
-        pytest --junitxml=test-results.xml
-      continue-on-error: true
-    - name: Archive test results
+        python -m unittest discover -s ./ -p 'test_app.py'  # Assuming tests are in the root directory
+
+    - name: Archive test reports
       uses: actions/upload-artifact@v2
       with:
-        name: test-results
-        path: test-results.xml
-
-
-
-
-
-
-
+        name: test-reports
+        path: .  # Store all files in the root directory as artifacts
