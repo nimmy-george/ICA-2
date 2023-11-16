@@ -14,5 +14,5 @@ jobs:
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
       - name: Build and Push Docker image
         run: |
-          docker buildx build --platform linux/amd64 -t docker.pkg.github.com/${{ github.repository }}/insightiqapp:latest .
+          docker buildx build --platform linux/amd64 -t docker.pkg.github.com/${{ github.repository }}/insightiqapp:latest --push .
           docker push docker.pkg.github.com/${{ github.repository }}/insightiqapp:latest
