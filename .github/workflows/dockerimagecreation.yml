@@ -1,16 +1,26 @@
-name: Build and Push Docker Image
+name: Docker Build and Push
+
 on: [push, pull_request]
 jobs:
-  build-and-push-image:
+  build:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-      - name: Log in to GitHub Packages
-        run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login docker.pkg.github.com -u insightiq --password-stdin
-      - name: Build and Push Docker image
-        run: |
-          docker buildx build --platform linux/amd64 -t docker.pkg.github.com/${{ github.repository }}/insightiq:latest --push .
-          docker push docker.pkg.github.com/${{ github.repository }}/insightiq:latest
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Docker
+      uses: actions/setup-node@v4
+      with:
+        node-version: '14'
+
+    - name: Build and push Docker image
+      env:
+        USERNAME: ${{ github.actor }}
+        VERSION: ${{ github.sha }}
+      run: |
+        echo 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 | docker login docker.pkg.github.com -u insightiq --password-stdin
+        docker build -t docker.pkg.github.com/${{ env.USERNAME }}/REPOSITORY/insightiq:${{ env.VERSION }} .
+        docker push docker.pkg.github.com/${{ env.USERNAME }}/REPOSITORY/insightiq:${{ env.VERSION }}
+
+ 
