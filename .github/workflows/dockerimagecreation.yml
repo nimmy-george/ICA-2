@@ -1,21 +1,22 @@
 name: Docker Build and Push
 
 on: [push, pull_request]
+
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v2
+      - name: Checkout Repository
+        uses: actions/checkout@v2
 
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v1
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
 
-    - name: Log in to GitHub Packages
-      run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login docker.pkg.github.com -u "${{ github.actor }}" --password-stdin
+      - name: Log in to GitHub Packages
+        run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login docker.pkg.github.com -u "${{ github.actor }}" --password-stdin
 
-    - name: Build and Push Docker Image
-      run: |
-        docker buildx create --use
-        docker buildx build --platform linux/amd64 -t docker.pkg.github.com/insightiq/ica2/insightiqapp:latest --push .
+      - name: Build and Push Docker Image
+        run: |
+          docker buildx create --use
+          docker buildx build --platform linux/amd64 -t docker.pkg.github.com/insightiq/ica2/insightiqapp:latest --push .
