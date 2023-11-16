@@ -55,8 +55,8 @@ jobs:
       - name: Archive test report
         uses: actions/upload-artifact@v2
         with:
-          name: test-report
-          path: test-report.txt  # Store the text report as an artifact
+          name: test-report1
+          path: test-report1.txt  # Store the text report as an artifact
 
 
   Windows-self-hosted:
@@ -87,8 +87,8 @@ jobs:
       - name: Archive test report
         uses: actions/upload-artifact@v2
         with:
-          name: test-report
-          path: test-report.txt  # Store the text report as an artifact 
+          name: test-report2
+          path: test-report2.txt  # Store the text report as an artifact 
 
   build_and_push_docker_image:
     runs-on: ubuntu-latest
