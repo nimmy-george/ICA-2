@@ -1,9 +1,7 @@
 name: Docker Build and Push
-on:
-  push:
-    branches:
-      - main  # Modify based on your branch requirements
-  # You can add additional triggers as needed, like pull_request
+on: [push, pull_request]
+ 
+
 jobs:
   build-and-push-image:
     runs-on: ubuntu-latest
