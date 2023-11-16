@@ -1,0 +1,20 @@
+name: 'Setup Testing Environment'
+description: 'Set up a testing environment for a Node.js application'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+name: CI Workflow
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Testing Environment
+        uses: ./.github/workflows/actions/setup-testing-environment
+        with:
+          args: ${{ github.repository }}
