@@ -1,0 +1,20 @@
+name: Docker Build and Push
+on:
+  push:
+    branches:
+      - main  # Modify based on your branch requirements
+  # You can add additional triggers as needed, like pull_request
+jobs:
+  build-and-push-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Log in to GitHub Packages
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+      - name: Build and Push Docker image
+        run: |
+          docker buildx build --platform linux/amd64 -t docker.pkg.github.com/${{ github.repository }}/insightiqapp:latest .
+          docker push docker.pkg.github.com/${{ github.repository }}/insightiqapp:latest
