@@ -19,13 +19,16 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt  # Replace with your requirements file if needed
 
-    - name: Run unit tests
+    - name: Run unit tests and generate reports
       run: |
+        mkdir test-reports  # Create a directory to store test reports
+        python -m unittest discover -s ./ -p '*test_app.py'  # Run tests
+        
+        # Generate your test reports using xmlrunner in the 'test-reports' directory
         python -m xmlrunner discover -s ./ -p '*test_app.py' --output=./test-reports
-  # Assuming tests are in the root directory
 
     - name: Archive test reports
       uses: actions/upload-artifact@v2
       with:
         name: test-reports
-        path: .  # Store all files in the root directory as artifacts
+        path: test-reports  # Store the test reports directory as an artifact
