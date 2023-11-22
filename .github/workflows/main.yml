@@ -60,11 +60,7 @@ jobs:
 
 
   Windows-self-hosted:
-    runs-on: self-hosted
-
-    strategy:
-      matrix:
-        os: [windows-2019]
+    runs-on: Windows  
 
     steps:
       - name: Checkout code
