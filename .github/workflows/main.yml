@@ -78,7 +78,7 @@ jobs:
 
       - name: Run unit tests and generate text report
         run: |
-          "${env:pythonLocation}\python.exe" -m unittest discover -s ./ -p 'test_app.py' > test-report.txt 2>&1
+          "${env:pythonLocation}\python.exe" -m unittest discover -s ./ -p 'test_app.py'
         shell: cmd
         env:
           pythonLocation: C:\Users\Administrator\actions-runner\_work\_tool\Python\3.12.0\x64
