@@ -76,13 +76,13 @@ jobs:
 
       - name: Run unit tests and generate text report
         run: |
-          python -m unittest discover -s ./ -p 'test_app.py' 2>&1 | tee test-report2.txt
+         python -m unittest discover -s ./ -p 'test_app.py'
 
       - name: Archive test report
         uses: actions/upload-artifact@v2
         with:
           name: test-report2
-          path: test-report2.txt  # Store the text report as an artifact
+          path: test-report2.txt  # Store the text report as an artifact 
 
   Package-Management-and-Service-Containers:
     runs-on: ubuntu-latest
