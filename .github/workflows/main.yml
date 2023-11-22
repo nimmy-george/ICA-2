@@ -107,6 +107,7 @@ jobs:
           IMAGE_NAME: ica2_image
           TAG: v1
 
+
 #      # Use Docker image in service container and run integration tests
 #      - name: Run integration tests using Docker image
 #        run: |
