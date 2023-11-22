@@ -98,7 +98,7 @@ jobs:
           # Authenticate to GitHub Packages
           echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u insightiq --password-stdin
           # Push the Docker image to GitHub Packages
-          docker push docker.pkg.github.com/insightiq/ica2/ica2_image:v1 .
+          docker push docker.pkg.github.com/insightiq/ica2/ica2_image:v1
         env:
           USERNAME: ${{ github.repository_owner }}
           REPOSITORY: ${{ github.event.repository.name }}
