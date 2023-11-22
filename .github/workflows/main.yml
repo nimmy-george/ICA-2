@@ -96,6 +96,7 @@ jobs:
         run: |
           # Build the Docker image
           docker build -t docker.pkg.github.com/insightiq/ica2/ica2_image:v1 .
+          export DOCKER_CLI_ASK_PASS=0
           # Authenticate to GitHub Packages using Docker PAT
           echo "${DOCKER_PAT}" | docker login docker.pkg.github.com -u insightiq --password-stdin
           # Push the Docker image to GitHub Packages
