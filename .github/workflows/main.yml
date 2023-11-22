@@ -93,8 +93,6 @@ jobs:
 
       # Publish Docker image to GitHub Packages
       - name: Publish Docker image
-        env:
-          DOCKER_PAT: ${{ secrets.DOCKER_PAT }}
         run: |
           # Build the Docker image
           docker build -t docker.pkg.github.com/insightiq/ica2/ica2_image:v1 .
