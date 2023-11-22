@@ -84,20 +84,23 @@ jobs:
           name: test-report2
           path: test-report2.txt  # Store the text report as an artifact 
 
+
   Package-Management-and-Service-Containers:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # Publish Docker image to GitHub Packages
+    # Publish Docker image to GitHub Packages
       - name: Publish Docker image
+        env:
+          DOCKER_PAT: ${{ secrets.DOCKER_PAT }}
         run: |
-          # Build the Docker image
+        # Build the Docker image
           docker build -t docker.pkg.github.com/insightiq/ica2/ica2_image:v1 .
-          # Authenticate to GitHub Packages
-          echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u insightiq --password-stdin
-          # Push the Docker image to GitHub Packages
+        # Authenticate to GitHub Packages using Docker PAT
+          echo "${DOCKER_PAT}" | docker login docker.pkg.github.com -u insightiq --password-stdin
+        # Push the Docker image to GitHub Packages
           docker push docker.pkg.github.com/insightiq/ica2/ica2_image:v1
         env:
           USERNAME: ${{ github.repository_owner }}
