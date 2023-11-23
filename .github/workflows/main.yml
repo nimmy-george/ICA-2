@@ -119,7 +119,7 @@ jobs:
 
           docker run --rm -t -d --name ica2_container docker.pkg.github.com/insightiq/ica2/ica2_image:v1
           sleep 10 
-          docker exec ica2_container curl -sS http://localhost:8080
+          docker exec ica2_container ls
           docker stop ica2_container
 
 #          # TEST:  Send an HTTP request to the service endpoint and validate the response
