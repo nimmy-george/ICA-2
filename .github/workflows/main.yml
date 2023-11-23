@@ -108,35 +108,29 @@ jobs:
           TAG: v1
 
 
-    # Use Docker image in service container and run integration tests
+      # Use Docker image in service container and run integration tests
       - name: Run integration tests using Docker image
         run: |
-          # Run integration tests against the service container
-        
           # Start the container
-          docker run --rm -d --name ica2_container -p 8080:8080 docker.pkg.github.com/insightiq/ica2/ica2_image:v1
+          docker run --rm -d --name ica2_container -p 5000:5000 docker.pkg.github.com/insightiq/ica2/ica2_image:v1
           sleep 10  # Give some time for the container to start (adjust this time if needed)
 
-#          docker run --rm -t -d --name ica2_container docker.pkg.github.com/insightiq/ica2/ica2_image:v1
-#          sleep 10 
-#          docker exec ica2_container ls
-#          docker stop ica2_container
+          # Send an HTTP request to the service endpoint and validate the response
+          response=$(curl -sS http://localhost:5000)
 
-          # TEST:  Send an HTTP request to the service endpoint and validate the response
-          response=$(curl -sS http://localhost:8080)
-        
           # Check if the response contains an expected output or status code
-          if [[ "$response" == *"expected_output"* ]]; then
+          if [[ "$response" == *"404 - Success"* ]]; then
             echo "Integration test passed: Found expected output."
           else
             echo "Integration test failed: Expected output not found."
             exit 1  # Exit with a non-zero code to indicate test failure
           fi
-        
+
           # Stop and remove the container
           docker stop ica2_container
         env:
           USERNAME: ${{ github.repository_owner }}
           REPOSITORY: ${{ github.event.repository.name }}
-          IMAGE_NAME: my-docker-image
-          TAG: latest
+          IMAGE_NAME: ica2_image
+          TAG: v1
+
